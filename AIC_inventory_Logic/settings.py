@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'phone',
     'myprofile',
     'stockinfo',
+    'inventory',
 ]
 
 MIDDLEWARE = [
