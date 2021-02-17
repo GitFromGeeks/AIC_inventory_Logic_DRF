@@ -19,5 +19,7 @@ urlpatterns = [
     path('profile/',vi.myprofileView.as_view()),
     path('stockinfo/',vw.stockinfoView.as_view()),
     path('inventory/',v_inv.inventoryView.as_view()),
+    path('inventory/<int:pk>/',v_inv.inventoryView.as_view()),
+    path('inventoryCreate/',v_inv.inventoryCreate.as_view()),
     
 ]
