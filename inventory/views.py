@@ -1,13 +1,12 @@
 from django.shortcuts import render
 from .models import inventory
-from ledgers.models import ledgers
+from ledgers.models import ledgers,debth
 from phone.models import phone
 from  .serializers import inventorySerializers
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView
-
 
 class inventoryView(APIView):
     def get(self,request,format=None,pk=None):
@@ -28,9 +27,9 @@ class inventoryCreate(CreateAPIView):
 
     def create(self,request):
         try:
-            obj=inventory.objects.get(branch_code=request.user.username,model=request.data.get('model'))
+            obj=inventory.objects.get(branch_code=request.data.get('branch_code'),model=request.data.get('model'))
             obj.quantity+=int(request.data.get('quantity'))
-            bc=request.user.username
+            bc=request.data.get('branch_code')
             md=request.data.get('model')
             qty=int(request.data.get('quantity'))
             ph=phone.objects.get(model=md)
@@ -38,14 +37,46 @@ class inventoryCreate(CreateAPIView):
             rs=ph.price
             ledgers.objects.create(branch_code=bc,model=md,quantity=qty,mobile=mbl,price=rs,credit=0,debit=qty*rs)
             obj.save()
-            return Response('')
+            try:
+                bc=request.data.get("branch_code")
+                md=request.data.get('model')
+                qty=int(request.data.get("quantity"))
+                ob=debth.objects.get(branch_code=bc)
+                ph=phone.objects.get(model=md)
+                rs=ph.price
+                debit=rs*qty
+                ob.debth+=debit
+                ob.save()
+                return Response("")
+            except debth.DoesNotExist:
+                ph=phone.objects.get(model=md)
+                rs=ph.price
+                qty=int(request.data.get("quantity"))
+                debit=rs*qty
+                debth.objects.create(branch_code=bc,debth=debit)
+                return Response("")
+
         except inventory.DoesNotExist:
-            inventory.objects.create(branch_code=request.user.username,model=request.data.get('model'),mobile=request.data.get('mobile'),quantity=int(request.data.get('quantity')))
-            bc=request.user.username
+            inventory.objects.create(branch_code=request.data.get('branch_code'),model=request.data.get('model'),mobile=request.data.get('mobile'),quantity=int(request.data.get('quantity')))
+            bc=request.data.get('branch_code')
             md=request.data.get('model')
             qty=int(request.data.get('quantity'))
             ph=phone.objects.get(model=md)
             mbl=ph.mobile
             rs=ph.price
             ledgers.objects.create(branch_code=bc,model=md,quantity=qty,mobile=mbl,price=rs,credit=0,debit=qty*rs)
-            return Response('')
+            try:
+                bc=request.data.get("branch_code")
+                md=request.data.get('model')
+                qty=int(request.data.get("quantity"))
+                ob=debth.objects.get(branch_code=bc)
+                ph=phone.objects.get(model=md)
+                rs=ph.price
+                debit=rs*qty
+                ob.debth+=debit
+                ob.save()
+                return Response("")
+            except debth.DoesNotExist:
+                debth.objects.create(branch_code=bc,debth=debit)
+                return Response("")
+    
