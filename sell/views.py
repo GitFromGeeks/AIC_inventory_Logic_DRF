@@ -1,23 +1,23 @@
 from django.shortcuts import render
-import io
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.parsers import JSONParser
 from .serializers import sellSerializers
-from rest_framework.generics import ListAPIView
+from rest_framework.views import APIView
 from .models import sell
-
-@csrf_exempt
-def sell_create(request):
-    if request.method =='post':
-        json_data=request.body
-        stream=io.BytesIO(json_data)
-        pythondata=JSONParser().parse(stream)
-        serializer=ordersSerializer(data=pythondata)
-        if serializer.is_valid():
-            serializer.save()
-            return
+from rest_framework.response import Response
+from rest_framework.generics import CreateAPIView
 
 
-class sellsHistory(ListAPIView):
+class sell_create(CreateAPIView):
     queryset=sell.objects.all()
     serializer_class=sellSerializers
+
+
+class sellsHistory(APIView):
+    def get(self,request,format=None,pk=None):
+        id=pk
+        if id is not None:
+            sel=sell.objects.get(id=id)
+            serializer=sellSerializers(sel)
+            return Response(serializer.data)
+        sel=sell.objects.filter(branch_code=request.user.username)
+        serializer=sellSerializers(sel,many=True)
+        return Response(serializer.data)

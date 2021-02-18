@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'myprofile',
     'stockinfo',
     'inventory',
+    'ledgers',
 ]
 
 MIDDLEWARE = [

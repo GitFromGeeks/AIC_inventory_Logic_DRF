@@ -2,7 +2,6 @@ from django.shortcuts import render
 from .models import inventory
 from  .serializers import inventorySerializers
 from rest_framework.response import Response
-
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView
@@ -30,5 +29,7 @@ class inventoryCreate(CreateAPIView):
             obj=inventory.objects.get(branch_code=request.user.username,model=request.data.get('model'))
             obj.quantity+=int(request.data.get('quantity'))
             obj.save()
+            return Response('')
         except inventory.DoesNotExist:
-            inventory.objects.create(branch_code=request.user.username,model=request.data.get('model'),mobile=request.data.get('mobile'),quantity=int(request.data.get('quantity')))
+            crt=inventory.objects.create(branch_code=request.user.username,model=request.data.get('model'),mobile=request.data.get('mobile'),quantity=int(request.data.get('quantity')))
+            return Response('')
