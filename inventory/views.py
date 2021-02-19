@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import inventory
 from ledgers.models import ledgers,debth
+from orders.models import orders
 from phone.models import phone
 from  .serializers import inventorySerializers
 from rest_framework.response import Response
@@ -20,7 +21,6 @@ class inventoryView(APIView):
         return Response(serializer.data)
 
 
-
 class inventoryCreate(CreateAPIView):
     queryset=inventory.objects.all()
     serializer_class=inventorySerializers
@@ -37,6 +37,8 @@ class inventoryCreate(CreateAPIView):
             rs=ph.price
             ledgers.objects.create(branch_code=bc,model=md,quantity=qty,mobile=mbl,price=rs,credit=0,debit=qty*rs)
             obj.save()
+            ordget=orders.objects.get(branch_code=bc,model=md,quantity=qty)
+            ordget.delete()
             try:
                 bc=request.data.get("branch_code")
                 md=request.data.get('model')
@@ -65,6 +67,8 @@ class inventoryCreate(CreateAPIView):
             mbl=ph.mobile
             rs=ph.price
             ledgers.objects.create(branch_code=bc,model=md,quantity=qty,mobile=mbl,price=rs,credit=0,debit=qty*rs)
+            ordget=orders.objects.get(branch_code=bc,model=md,quantity=qty)
+            ordget.delete()
             try:
                 bc=request.data.get("branch_code")
                 md=request.data.get('model')

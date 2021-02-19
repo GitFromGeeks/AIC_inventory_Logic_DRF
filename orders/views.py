@@ -12,25 +12,23 @@ class order_create(CreateAPIView):
     queryset=orders.objects.all()
     serializer_class=ordersSerializer
 
-# @csrf_exempt
-# def order_create(request):
-#     if request.method =='post':
-#         json_data=request.body
-#         stream=io.BytesIO(json_data)
-#         pythondata=JSONParser().parse(stream)
-#         serializer=ordersSerializer(data=pythondata)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response('')
-
 
 class orderHistory(APIView):
     def get(self,request,format=None,pk=None):
         id=pk
         if id is not None:
             ord=orders.objects.get(id=id)
-            serializer=ordersSerializers(ord)
+            serializer=ordersSerializer(ord)
             return Response(serializer.data)
         ord=orders.objects.filter(branch_code=request.user.username)
         serializer=ordersSerializer(ord,many=True)
         return Response(serializer.data)
+
+
+
+class orderdelete(APIView):
+    def get(self,request,pk,format=None):
+        id=pk
+        ord1=orders.objects.get(pk=id)
+        ord1.delete()
+        return Response('Deleted')

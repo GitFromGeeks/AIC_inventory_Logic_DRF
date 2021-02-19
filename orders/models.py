@@ -7,7 +7,6 @@ class orders(models.Model):
     price=models.IntegerField()
     quantity=models.IntegerField()
 
-
     created_at = models.DateTimeField(auto_now_add=True)
     id=models.AutoField(primary_key=True)
 

@@ -9,9 +9,11 @@ from stockinfo import views as vw
 from inventory import views as v_inv
 from ledgers import views as vled
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('ordernow/',views.order_create),
+    path('ordernow/',views.order_create.as_view()),
+    path('orderdelete/<int:pk>/',views.orderdelete.as_view()),
     path('orderhistory/',views.orderHistory.as_view()),
     path('sell/',vue.sell_create.as_view()),
     path('sellshistory/',vue.sellsHistory.as_view()),
