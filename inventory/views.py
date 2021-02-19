@@ -29,6 +29,8 @@ class inventoryCreate(CreateAPIView):
     authentication_classes=[SessionAuthentication]
     permission_classes=[IsAdminUser]
 
+
+    
     def create(self,request):
         try:
             obj=inventory.objects.get(branch_code=request.data.get('branch_code'),model=request.data.get('model'))
