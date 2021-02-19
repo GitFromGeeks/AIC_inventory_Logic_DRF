@@ -16,5 +16,5 @@ class stockinfoView(APIView):
             serializer=stockinfoSerializers(stk)
             return Response(serializer.data)
         stk=stockinfo.objects.filter(branch_code=request.user.username)
-        serializer=stockinfoSerializer(stk,many=True)
+        serializer=stockinfoSerializers(stk,many=True)
         return Response(serializer.data)

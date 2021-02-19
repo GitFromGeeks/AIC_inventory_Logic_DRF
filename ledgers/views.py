@@ -3,6 +3,8 @@ from .serializers import ledgersSerializers,debthSerializers
 from .models import ledgers,debth
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.authentication import SessionAuthentication
+from rest_framework.permissions import IsAdminUser
 
 
 
@@ -22,6 +24,8 @@ class ledgersView(APIView):
 
 
 class AICdebthView(APIView):
+    authentication_classes=[SessionAuthentication]
+    permission_classes=[IsAdminUser]
     def get(self,request,format=None,pk=None):
         branch_code=pk
         if branch_code is not None:

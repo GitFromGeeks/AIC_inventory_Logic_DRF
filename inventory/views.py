@@ -8,6 +8,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView
+from rest_framework.authentication import SessionAuthentication
+from rest_framework.permissions import IsAdminUser
 
 class inventoryView(APIView):
     def get(self,request,format=None,pk=None):
@@ -24,6 +26,8 @@ class inventoryView(APIView):
 class inventoryCreate(CreateAPIView):
     queryset=inventory.objects.all()
     serializer_class=inventorySerializers
+    authentication_classes=[SessionAuthentication]
+    permission_classes=[IsAdminUser]
 
     def create(self,request):
         try:

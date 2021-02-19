@@ -19,6 +19,7 @@ urlpatterns = [
     path('sellshistory/',vue.sellsHistory.as_view()),
     path('credit/',vu.credit_create.as_view()),
     path('phone/',v.phoneView.as_view()),
+    path('phone/?search=',v.phoneView.as_view()),
     path('profile/',vi.myprofileView.as_view()),
     path('stockinfo/',vw.stockinfoView.as_view()),
     path('inventory/',v_inv.inventoryView.as_view()),
