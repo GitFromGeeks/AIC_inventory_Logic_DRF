@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
 from orders import views
 from sell import views as vue
 from credit import views as vu
@@ -28,5 +28,6 @@ urlpatterns = [
     path('ledgers/',vled.ledgersView.as_view()),
     path('AICdebth/',vled.AICdebthView.as_view()),
     path('debth/',vled.debthView.as_view()),
+    path('',include('rest_framework.urls')),
     
 ]
