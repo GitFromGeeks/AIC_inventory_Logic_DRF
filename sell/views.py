@@ -5,6 +5,7 @@ from .models import sell
 from inventory.models import inventory
 from rest_framework.response import Response
 from rest_framework.generics import CreateAPIView
+from rest_framework.authtoken.models import Token
 
 
 class sell_create(APIView):
@@ -31,6 +32,7 @@ class sellsHistory(APIView):
         if id is not None:
             sel=sell.objects.get(id=id)
             serializer=sellSerializers(sel)
+            tkn=request.META.get('HTTP_AUTHORIZATION')
             return Response(serializer.data)
         sel=sell.objects.filter(branch_code=request.user.username)
         serializer=sellSerializers(sel,many=True)

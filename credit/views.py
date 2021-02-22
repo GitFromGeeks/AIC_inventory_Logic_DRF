@@ -6,7 +6,7 @@ from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView
-from rest_framework.authentication import SessionAuthentication
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAdminUser
 
 
@@ -14,7 +14,6 @@ from rest_framework.permissions import IsAdminUser
 class credit_create(CreateAPIView):
     queryset=credit.objects.all()
     serializer_class=creditSerializers
-    authentication_classes=[SessionAuthentication]
     permission_classes=[IsAdminUser]
 
 

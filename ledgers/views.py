@@ -3,8 +3,9 @@ from .serializers import ledgersSerializers,debthSerializers
 from .models import ledgers,debth
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.authentication import SessionAuthentication
-from rest_framework.permissions import IsAdminUser
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAdminUser,IsAuthenticated
+from rest_framework.authtoken.models import Token
 
 
 
@@ -15,6 +16,7 @@ class ledgersView(APIView):
         if id is not None:
             led=ledgers.objects.get(id=id)
             serializer=ledgersSerializers(led)
+            tkn=request.META.get('HTTP_AUTHORIZATION')
             return Response(serializer.data)
         led=ledgers.objects.filter(branch_code=request.user.username)
         serializer=ledgersSerializers(led,many=True)
@@ -24,7 +26,6 @@ class ledgersView(APIView):
 
 
 class AICdebthView(APIView):
-    authentication_classes=[SessionAuthentication]
     permission_classes=[IsAdminUser]
     def get(self,request,format=None,pk=None):
         branch_code=pk

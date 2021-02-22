@@ -8,15 +8,17 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView
-from rest_framework.authentication import SessionAuthentication
-from rest_framework.permissions import IsAdminUser
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated,IsAdminUser
+from rest_framework.authtoken.models import Token
 
 class inventoryView(APIView):
     def get(self,request,format=None,pk=None):
         id=pk
         if id is not None:
-            inv=inventory.objects.get(id=id)
+            inv=inventory.objects.filter(branch_code=id)
             serializer=inventorySerializers(inv)
+            tkn=request.META.get('HTTP_AUTHORIZATION')
             return Response(serializer.data)
         inv=inventory.objects.filter(branch_code=request.user.username)
         serializer=inventorySerializers(inv,many=True)
@@ -26,7 +28,6 @@ class inventoryView(APIView):
 class inventoryCreate(CreateAPIView):
     queryset=inventory.objects.all()
     serializer_class=inventorySerializers
-    authentication_classes=[SessionAuthentication]
     permission_classes=[IsAdminUser]
 
 

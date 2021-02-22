@@ -8,6 +8,7 @@ from myprofile import views as vi
 from stockinfo import views as vw
 from inventory import views as v_inv
 from ledgers import views as vled
+from rest_framework.authtoken.views import obtain_auth_token
 
 
 urlpatterns = [
@@ -23,11 +24,11 @@ urlpatterns = [
     path('profile/',vi.myprofileView.as_view()),
     path('stockinfo/',vw.stockinfoView.as_view()),
     path('inventory/',v_inv.inventoryView.as_view()),
-    path('inventory/<int:pk>/',v_inv.inventoryView.as_view()),
+    path('inventory/<str:pk>/',v_inv.inventoryView.as_view()),
     path('inventoryCreate/',v_inv.inventoryCreate.as_view()),
     path('ledgers/',vled.ledgersView.as_view()),
     path('AICdebth/',vled.AICdebthView.as_view()),
     path('debth/',vled.debthView.as_view()),
-    path('',include('rest_framework.urls')),
+    path('login/',obtain_auth_token),
     
 ]

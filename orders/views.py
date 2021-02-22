@@ -7,10 +7,12 @@ from rest_framework.views import APIView
 from .models import orders
 from rest_framework.response import Response
 from rest_framework.generics import CreateAPIView
+from rest_framework.authtoken.models import Token
 
 class order_create(CreateAPIView):
     queryset=orders.objects.all()
     serializer_class=ordersSerializer
+
 
 
 class orderHistory(APIView):
@@ -19,6 +21,7 @@ class orderHistory(APIView):
         if id is not None:
             ord=orders.objects.get(id=id)
             serializer=ordersSerializer(ord)
+            tkn=request.META.get('HTTP_AUTHORIZATION')
             return Response(serializer.data)
         ord=orders.objects.filter(branch_code=request.user.username)
         serializer=ordersSerializer(ord,many=True)
