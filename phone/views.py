@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework.filters import SearchFilter
 
 
+
 class phoneView(ListAPIView):
     queryset=phone.objects.all()
     serializer_class=phoneSerializers

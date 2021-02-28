@@ -1,4 +1,3 @@
-from django.shortcuts import render
 import io
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
@@ -12,6 +11,7 @@ from rest_framework.authtoken.models import Token
 class order_create(CreateAPIView):
     queryset=orders.objects.all()
     serializer_class=ordersSerializer
+
 
 
 
@@ -35,3 +35,15 @@ class orderdelete(APIView):
         ord1=orders.objects.get(pk=id)
         ord1.delete()
         return Response('Deleted')
+
+
+class inventoryadd(APIView):
+    def get(self,request,format=None,pk=None):
+        id=pk
+        if id is not None:
+            ord=orders.objects.get(id=id)
+            serializer=ordersSerializer(ord)
+            return Response(serializer.data)
+        ord=orders.objects.all()
+        serializer=ordersSerializer(ord,many=True)
+        return Response(serializer.data)

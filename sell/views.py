@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from .serializers import sellSerializers
 from rest_framework.views import APIView
 from .models import sell
@@ -6,6 +5,7 @@ from inventory.models import inventory
 from rest_framework.response import Response
 from rest_framework.generics import CreateAPIView
 from rest_framework.authtoken.models import Token
+
 
 
 class sell_create(APIView):

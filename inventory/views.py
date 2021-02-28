@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from .models import inventory
 from ledgers.models import ledgers,debth
 from orders.models import orders
@@ -11,6 +10,7 @@ from rest_framework.generics import CreateAPIView
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
 from rest_framework.authtoken.models import Token
+
 
 class inventoryView(APIView):
     def get(self,request,format=None,pk=None):
