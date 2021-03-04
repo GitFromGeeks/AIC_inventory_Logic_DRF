@@ -76,18 +76,6 @@ class inventoryCreate(CreateAPIView):
             ordget=orders.objects.get(branch_code=bc,model=md,quantity=qty)
             ordget.delete()
             try:
-                md=request.data.get('model')
-                mbstk=mobilestock.objects.get(model=md)
-                mbstk.quantity-=int(request.data.get('quantity'))
-                mbstk.save()
-            except mobilestock.DoesNotExist:
-                md=request.data.get('model')
-                qty=-(request.data.get('quantity'))
-                ph=phone.objects.get(model=md)
-                mbl=ph.mobile
-                rs=ph.price
-                mobilestock.objects.create(model=md,mobile=mbl,price=rs,quantity=qty,amount=qty*rs)
-            try:
                 bc=request.data.get("branch_code")
                 md=request.data.get('model')
                 qty=int(request.data.get("quantity"))
@@ -97,15 +85,40 @@ class inventoryCreate(CreateAPIView):
                 debit=rs*qty
                 ob.debth+=debit
                 ob.save()
-                return Response("")
+                try:
+                    md=request.data.get('model')
+                    mbstk=mobilestock.objects.get(model=md)
+                    mbstk.quantity-=int(request.data.get('quantity'))
+                    mbstk.save()
+                    return Response('Created')
+                except mobilestock.DoesNotExist:
+                    md=request.data.get('model')
+                    qty=-(request.data.get('quantity'))
+                    ph=phone.objects.get(model=md)
+                    mbl=ph.mobile
+                    rs=ph.price
+                    mobilestock.objects.create(model=md,mobile=mbl,price=rs,quantity=qty,amount=qty*rs)
+                    return Response('Created')
             except debth.DoesNotExist:
                 ph=phone.objects.get(model=md)
                 rs=ph.price
                 qty=int(request.data.get("quantity"))
                 debit=rs*qty
                 debth.objects.create(branch_code=bc,debth=debit)
-                return Response("")
-
+                try:
+                    md=request.data.get('model')
+                    mbstk=mobilestock.objects.get(model=md)
+                    mbstk.quantity-=int(request.data.get('quantity'))
+                    mbstk.save()
+                    return Response('Created')
+                except mobilestock.DoesNotExist:
+                    md=request.data.get('model')
+                    qty=-(request.data.get('quantity'))
+                    ph=phone.objects.get(model=md)
+                    mbl=ph.mobile
+                    rs=ph.price
+                    mobilestock.objects.create(model=md,mobile=mbl,price=rs,quantity=qty,amount=qty*rs)
+                    return Response('Created')
         except inventory.DoesNotExist:
             inventory.objects.create(branch_code=request.data.get('branch_code'),model=request.data.get('model'),mobile=request.data.get('mobile'),quantity=int(request.data.get('quantity')))
             bc=request.data.get('branch_code')
@@ -118,18 +131,6 @@ class inventoryCreate(CreateAPIView):
             ordget=orders.objects.get(branch_code=bc,model=md,quantity=qty)
             ordget.delete()
             try:
-                md=request.data.get('model')
-                mbstk=mobilestock.objects.get(model=md)
-                mbstk.quantity-=int(request.data.get('quantity'))
-                mbstk.save()
-            except mobilestock.DoesNotExist:
-                md=request.data.get('model')
-                qty=-(request.data.get('quantity'))
-                ph=phone.objects.get(model=md)
-                mbl=ph.mobile
-                rs=ph.price
-                mobilestock.objects.create(model=md,mobile=mbl,price=rs,quantity=qty,amount=qty*rs)
-            try:
                 bc=request.data.get("branch_code")
                 md=request.data.get('model')
                 qty=int(request.data.get("quantity"))
@@ -139,8 +140,34 @@ class inventoryCreate(CreateAPIView):
                 debit=rs*qty
                 ob.debth+=debit
                 ob.save()
-                return Response("")
+                try:
+                    md=request.data.get('model')
+                    mbstk=mobilestock.objects.get(model=md)
+                    mbstk.quantity-=int(request.data.get('quantity'))
+                    mbstk.save()
+                    return Response('Created')
+                except mobilestock.DoesNotExist:
+                    md=request.data.get('model')
+                    qty=-(request.data.get('quantity'))
+                    ph=phone.objects.get(model=md)
+                    mbl=ph.mobile
+                    rs=ph.price
+                    mobilestock.objects.create(model=md,mobile=mbl,price=rs,quantity=qty,amount=qty*rs)
+                    return Response('Created')
             except debth.DoesNotExist:
                 debth.objects.create(branch_code=bc,debth=debit)
-                return Response("")
+                try:
+                    md=request.data.get('model')
+                    mbstk=mobilestock.objects.get(model=md)
+                    mbstk.quantity-=int(request.data.get('quantity'))
+                    mbstk.save()
+                    return Response('Created')
+                except mobilestock.DoesNotExist:
+                    md=request.data.get('model')
+                    qty=-(request.data.get('quantity'))
+                    ph=phone.objects.get(model=md)
+                    mbl=ph.mobile
+                    rs=ph.price
+                    mobilestock.objects.create(model=md,mobile=mbl,price=rs,quantity=qty,amount=qty*rs)
+                    return Response('Created')
     

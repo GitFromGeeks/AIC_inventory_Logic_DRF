@@ -47,6 +47,10 @@ INSTALLED_APPS = [
     'stockinfo',
     'inventory',
     'ledgers',
+    'acc',
+    'accorder',
+    'accinventory',
+    'accsell',
 ]
 
 MIDDLEWARE = [
