@@ -8,7 +8,13 @@ class sell(models.Model):
     customer_name=models.CharField(max_length=15)
     customer_number=models.IntegerField()
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    # customer_add=models.CharField(max_length=200)
+    # dp=models.IntegerField()
+    # emi=models.IntegerField()
+    # loan_id=models.CharField(max_length=80)
+    # imei=models.CharField(max_length=80)
+
+    created_at=models.DateField(auto_now_add=True)
     id=models.AutoField(primary_key=True)
 
     def __str__(self):

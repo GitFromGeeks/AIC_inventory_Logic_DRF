@@ -5,7 +5,7 @@ class stockinfo(models.Model):
     imei=models.CharField(max_length=30)
     mobile=models.CharField(max_length=100)
 
-    created_at=models.DateTimeField(auto_now_add=True)
+    created_at=models.DateField(auto_now_add=True)
     id=models.AutoField(primary_key=True)
 
     def __str__(self):

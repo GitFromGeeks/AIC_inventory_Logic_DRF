@@ -27,6 +27,8 @@ urlpatterns = [
     path('stockinfo/',vw.stockinfoView.as_view()),
     path('inventory/',v_inv.inventoryView.as_view()),
     path('inventoryCreate/',v_inv.inventoryCreate.as_view()),
+    path('mobilestock/',v_inv.mobilestockView.as_view()),
+    path('mobilestockCreate/',v_inv.mobilestockCreate.as_view()),
     path('ledgers/',vled.ledgersView.as_view()),
     path('AICdebth/',vled.AICdebthView.as_view()),
     path('debth/',vled.debthView.as_view()),

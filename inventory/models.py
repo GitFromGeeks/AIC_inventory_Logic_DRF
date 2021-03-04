@@ -10,3 +10,14 @@ class inventory(models.Model):
 
     def __str__(self):
         return self.branch_code
+
+
+class mobilestock(models.Model):
+    model=models.CharField(max_length=40)
+    mobile=models.CharField(max_length=200)
+    price=models.IntegerField()
+    quantity=models.IntegerField()
+    amount=models.IntegerField()
+
+    def __str__(self):
+        return self.mobile

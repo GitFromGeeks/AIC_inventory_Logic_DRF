@@ -12,7 +12,7 @@ class ledgers(models.Model):
     debit=models.BigIntegerField()
 
 
-    created_at=models.DateTimeField(auto_now_add=True)
+    created_at=models.DateField(auto_now_add=True)
     id=models.AutoField(primary_key=True)
 
 
