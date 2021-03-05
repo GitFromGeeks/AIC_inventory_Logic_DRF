@@ -14,17 +14,17 @@ import tempfile
 # from django.db.models import Sum
 
 
-
 class export_pdf(APIView):
     permission_classes=[AllowAny]
     def get(self,request,format=None,pk=None):
+        id=pk
         response=HttpResponse(content_type='application/pdf')
         response['Content-Disposition']='inline; attachment; filename=Sell'+\
             str(datetime.datetime.now())+'.pdf'
 
         response['Content-Transfer-Encoding']='binary'
 
-        sells=sell.objects.all()
+        sells=sell.objects.filter(branch_code=id)
 
         html_string=render_to_string('pdfoutput.html',{'sells':sells,'total':0})
 
