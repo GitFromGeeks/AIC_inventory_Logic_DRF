@@ -1,10 +1,47 @@
 from .serializers import sellSerializers
 from rest_framework.views import APIView
 from .models import sell
+from django.http import HttpResponse
 from inventory.models import inventory
 from rest_framework.response import Response
 from rest_framework.generics import CreateAPIView
 from rest_framework.authtoken.models import Token
+from rest_framework.permissions import AllowAny
+import datetime
+from django.template.loader import render_to_string
+from weasyprint import HTML
+import tempfile
+# from django.db.models import Sum
+
+
+
+class export_pdf(APIView):
+    permission_classes=[AllowAny]
+    def get(self,request,format=None,pk=None):
+        response=HttpResponse(content_type='application/pdf')
+        response['Content-Disposition']='inline; attachment; filename=Sell'+\
+            str(datetime.datetime.now())+'.pdf'
+
+        response['Content-Transfer-Encoding']='binary'
+
+        sells=sell.objects.all()
+
+        html_string=render_to_string('pdfoutput.html',{'sells':sells,'total':0})
+
+        html=HTML(string=html_string)
+        result=html.write_pdf()
+
+
+
+        with tempfile.NamedTemporaryFile(delete=True) as output:
+            output.write(result)
+            output.flush()
+
+
+            output=open(output.name,'rb')
+            response.write(output.read())
+        
+        return response
 
 
 

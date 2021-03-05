@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,6 +27,9 @@ SECRET_KEY = '=e_6%l#8=_bc)swzp1g56zbzv5gt7a_^51pc(ved2okj_)5faj'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
+
+TEMPLATES_DIR=os.path.join(BASE_DIR,'templates')
 
 
 # Application definition
@@ -68,7 +72,7 @@ ROOT_URLCONF = 'AIC_inventory_Logic.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLATES_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

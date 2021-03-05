@@ -24,6 +24,8 @@ urlpatterns = [
     path('ledgers/',vled.ledgersView.as_view()),
     path('AICdebth/',vled.AICdebthView.as_view()),
     path('debth/',vled.debthView.as_view()),
+    path('sellsdetail/',vue.export_pdf.as_view()),
+    path('sellsdetail/<str:pk>/',vue.export_pdf.as_view()),
 
     path('phone/',v.phoneView.as_view()),
     path('phone/?search=',v.phoneView.as_view()),
