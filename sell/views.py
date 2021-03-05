@@ -26,7 +26,7 @@ class export_pdf(APIView):
 
         sells=sell.objects.filter(branch_code=id)
 
-        html_string=render_to_string('pdfoutput.html',{'sells':sells,'total':0})
+        html_string=render_to_string('pdfoutput.html',{'sells':sells,'total':0,'bcode':id})
 
         html=HTML(string=html_string)
         result=html.write_pdf()

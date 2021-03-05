@@ -25,14 +25,12 @@
 </head>
 <body>
     <h2>Sells Detail</h2>
+    <h3>Branch Code :- {{bcode}}</h3>
     <hr>
     <table class="table">
         <thead class="thead">
             <tr>
                 <th>Date</th>
-                <th>  </th>
-                <th>  </th>
-                <th>Branch</th>
                 <th>  </th>
                 <th>  </th>
                 <th>Mobile</th>
@@ -54,9 +52,6 @@
             {% for sell in sells %}
             <tr>
                 <td>{{sell.created_at}}</td>
-                <td>   </td>
-                <td>   </td>
-                <td>{{sell.branch_code}}</td>
                 <td>   </td>
                 <td>   </td>
                 <td>{{sell.mobile}}</td>
