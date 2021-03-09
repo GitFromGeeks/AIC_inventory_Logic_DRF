@@ -32,6 +32,7 @@ class accstockView(APIView):
         return Response(serializer.data)
 
 
+
 class accstockCreate(CreateAPIView):
     queryset=accstock.objects.all()
     serializer_class=accstockSerializers
@@ -40,10 +41,10 @@ class accstockCreate(CreateAPIView):
     def create(self,request):
         try:
             acn=request.data.get('acc_name')
-            obj=accstock.objects.get(acc_name==acn)
+            obj=accstock.objects.get(acc_name=acn)
             obj.quantity+=int(request.data.get('quantity'))
-            qty=request.data.get('quantity')
-            accs=acc.objects.get(acc_name=acn)
+            qty=int(request.data.get('quantity'))
+            accs=accessorie.objects.get(acc_name=acn)
             rs=accs.price
             amnt=rs*qty
             obj.amount+=amnt
