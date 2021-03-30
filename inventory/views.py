@@ -58,6 +58,50 @@ class mobilestockCreate(CreateAPIView):
             return Response("Created")
 
 
+class Returnstock(APIView):
+    def post(self,request,format=None):
+        obj=inventory.objects.get(branch_code=request.data.get('branch_code'),model=request.data.get('model'))
+        obj.quantity-=1
+        obj.save()
+        phn=phone.objects.get(model=request.data.get('model'))
+        rs=phn.price
+        dbt=debth.objects.get(branch_code=request.data.get('branch_code'))
+        dbt.debth-=rs
+        dbt.save()
+        mbstk=mobilestock.objects.get(model=request.data.get('model'))
+        mbstk.quantity+=1
+        mbstk.save()
+        return Response('Returned')
+
+
+class transfer(APIView):
+    def post(self,request,format=None):
+        obj=inventory.objects.get(branch_code=request.data.get('branch_code1'),model=request.data.get('model'))
+        obj.quantity-=1
+        obj.save()
+        phn=phone.objects.get(model=request.data.get('model'))
+        rs=phn.price
+        dbt=debth.objects.get(branch_code=request.data.get('branch_code1'))
+        dbt.debth-=rs
+        dbt.save()
+        try:
+            ob=inventory.objects.get(branch_code=request.data.get('branch_code2'),model=request.data.get('model'))
+            ob.quantity+=1
+            ob.save()
+            ph=phone.objects.get(model=request.data.get('model'))
+            rs=ph.price
+            dbt1=debth.objects.get(branch_code=request.data.get('branch_code2'))
+            dbt1.debth+=rs
+            dbt1.save()
+            return Response('Transfer done')
+        except inventory.DoesNotExist:
+            phn=phone.objects.get(model=request.data.get('model'))
+            mbl=phn.mobile
+            inventory.objects.create(branch_code=request.data.get('branch_code2'),model=request.data.get('model'),mobile=mbl,quantity=1)
+            dbt1=debth.objects.get(branch_code=request.data.get('branch_code2'))
+            dbt1.debth+=rs
+            dbt1.save()
+            return Response('Transfer done')
 
 
 class inventoryCreate(CreateAPIView):

@@ -12,8 +12,6 @@ class credit_create(CreateAPIView):
     queryset=credit.objects.all()
     serializer_class=creditSerializers
     permission_classes=[IsAdminUser]
-
-
     def create(self,request):
         try:
             bc=request.data.get("branch_code")

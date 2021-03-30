@@ -53,5 +53,7 @@ urlpatterns = [
     path('accstock/',acin_v.accstockView.as_view()),
     path('accstockCreate/',acin_v.accstockCreate.as_view()),
     path('login/',obtain_auth_token),
+    path('transfer/',v_inv.transfer.as_view()),
+    path('returnstock/',v_inv.Returnstock.as_view()),
 
 ]
