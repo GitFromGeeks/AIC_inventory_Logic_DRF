@@ -26,6 +26,11 @@ urlpatterns = [
     path('debth/',vled.debthView.as_view()),
     path('sellsdetail/',vue.export_pdf.as_view()),
     path('sellsdetail/<str:pk>/',vue.export_pdf.as_view()),
+    path('account/',vled.accountView.as_view()),
+    path('AICdebit/',vled.AICdebitView.as_view()),
+    path('debit/',vled.debitView.as_view()),
+    path('accountCreate/',vled.accountCreate.as_view()),
+
 
     path('phone/',v.phoneView.as_view()),
     path('phone/?search=',v.phoneView.as_view()),
@@ -55,5 +60,6 @@ urlpatterns = [
     path('login/',obtain_auth_token),
     path('transfer/',v_inv.transfer.as_view()),
     path('returnstock/',v_inv.Returnstock.as_view()),
+
 
 ]
