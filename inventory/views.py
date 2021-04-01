@@ -2,7 +2,7 @@ from .models import inventory,mobilestock,transferstock
 from ledgers.models import ledgers,debth
 from orders.models import orders
 from phone.models import phone
-from  .serializers import inventorySerializers,mobilestockSerializers
+from  .serializers import inventorySerializers,mobilestockSerializers,transferstockSerializers
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
@@ -24,6 +24,10 @@ class inventoryView(APIView):
         inv=inventory.objects.filter(branch_code=request.user.username)
         serializer=inventorySerializers(inv,many=True)
         return Response(serializer.data)
+
+class transferinfoView(ListAPIView):
+    queryset=transferstock.objects.all()
+    serializer_class=transferstockSerializers
 
 
 class branchinventoryView(ListAPIView):
