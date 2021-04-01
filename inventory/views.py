@@ -10,6 +10,7 @@ from rest_framework.generics import CreateAPIView,ListAPIView
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
 from rest_framework.authtoken.models import Token
+from rest_framework.filters import SearchFilter
 
 
 class inventoryView(APIView):
@@ -23,6 +24,13 @@ class inventoryView(APIView):
         inv=inventory.objects.filter(branch_code=request.user.username)
         serializer=inventorySerializers(inv,many=True)
         return Response(serializer.data)
+
+
+class branchinventoryView(ListAPIView):
+    queryset=inventory.objects.all()
+    serializer_class=inventorySerializers
+    filter_backends=[SearchFilter]
+    search_fields=['^branch_code']
 
 class mobilestockView(APIView):
     def get(self,request,format=None,pk=None):

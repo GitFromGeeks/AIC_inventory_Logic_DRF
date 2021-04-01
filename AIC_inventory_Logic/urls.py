@@ -30,6 +30,8 @@ urlpatterns = [
     path('AICdebit/',vled.AICdebitView.as_view()),
     path('debit/',vled.debitView.as_view()),
     path('accountCreate/',vled.accountCreate.as_view()),
+    path('branchinventory/',v_inv.branchinventoryView.as_view()),
+    path('branchinventory/?search=',v_inv.branchinventoryView.as_view()),
 
 
     path('phone/',v.phoneView.as_view()),
