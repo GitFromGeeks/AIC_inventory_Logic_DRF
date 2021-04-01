@@ -1,4 +1,4 @@
-from .models import inventory,mobilestock
+from .models import inventory,mobilestock,transferstock
 from ledgers.models import ledgers,debth
 from orders.models import orders
 from phone.models import phone
@@ -38,6 +38,7 @@ class mobilestockView(APIView):
         mbskt=mobilestock.objects.all()
         serializer=mobilestockSerializers(mbskt,many=True)
         return Response(serializer.data)
+
 
 
 class mobilestockCreate(CreateAPIView):
@@ -92,6 +93,7 @@ class transfer(APIView):
         dbt=debth.objects.get(branch_code=request.data.get('branch_code1'))
         dbt.debth-=rs
         dbt.save()
+        transferstock.objects.create(frombranch=request.data.get('branch_code1'),tobranch=request.data.get('branch_code2'),model=request.data.get('model'))
         try:
             ob=inventory.objects.get(branch_code=request.data.get('branch_code2'),model=request.data.get('model'))
             ob.quantity+=1
