@@ -13,3 +13,4 @@ class mobilestockAdmin(admin.ModelAdmin):
 @admin.register(transferstock)
 class transferstockAdmin(admin.ModelAdmin):
     list_display=['id','created_at','frombranch','tobranch','model']
+    

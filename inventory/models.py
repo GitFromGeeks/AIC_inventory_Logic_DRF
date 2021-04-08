@@ -1,6 +1,5 @@
 from django.db import models
 
-
 class inventory(models.Model):
     id=models.AutoField(primary_key=True)
     branch_code=models.CharField(max_length=15)

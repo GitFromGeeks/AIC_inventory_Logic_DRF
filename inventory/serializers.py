@@ -16,3 +16,4 @@ class transferstockSerializers(serializers.ModelSerializer):
     class Meta:
         model=transferstock
         fields=['id','created_at','frombranch','tobranch','model']
+        
