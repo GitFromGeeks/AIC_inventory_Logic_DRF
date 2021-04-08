@@ -8,9 +8,34 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView,ListAPIView
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated,IsAdminUser
+from rest_framework.permissions import IsAuthenticated,IsAdminUser,AllowAny
 from rest_framework.authtoken.models import Token
 from rest_framework.filters import SearchFilter
+import datetime
+from django.template.loader import render_to_string
+from weasyprint import HTML
+import tempfile
+from django.http import HttpResponse
+
+
+class export_pdfinv(APIView):
+    permission_classes=[AllowAny]
+    def get(self,request,format=None,pk=None):
+        id=pk
+        response=HttpResponse(content_type='application/pdf')
+        response['Content-Disposition']='inline; attachment; filename=Inventory'+\
+            str(datetime.datetime.now())+'.pdf'
+        response['Content-Transfer-Encoding']='binary'
+        inven=inventory.objects.filter(branch_code=id)
+        html_string=render_to_string('inventoryinfo.html',{'inven':inven,'total':0,'bcode':id})
+        html=HTML(string=html_string)
+        result=html.write_pdf()
+        with tempfile.NamedTemporaryFile(delete=True) as output:
+            output.write(result)
+            output.flush()
+            output=open(output.name,'rb')
+            response.write(output.read())
+        return response
 
 
 class inventoryView(APIView):

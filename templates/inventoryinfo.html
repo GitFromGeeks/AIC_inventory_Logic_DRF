@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Details</title>
+    <style>
+
+        @page{
+            size: "A4";
+            margin: 2.5cm 1.5cm 3.5cm 1.5cm;
+
+            @top-center{
+                content: "Advance Info Communication";
+            }
+
+            @bottom-right{
+                content: "Page" counter(page) " of " counter(pages);
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <h2>Stock Details</h2>
+    <hr>
+    <h3>Branch Code :- {{bcode}}</h3>
+    <hr>
+    <table class="table">
+        <thead class="thead">
+            <tr>
+                <th>Mobile</th>
+                <th>  </th>
+                <th>  </th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for inv in inven %}
+            <tr>
+                <td>{{inv.mobile}}</td>
+                <td>   </td>
+                <td>   </td>
+                <td>{{inv.quantity}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+</body>
+</html>

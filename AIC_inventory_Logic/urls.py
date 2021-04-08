@@ -33,6 +33,8 @@ urlpatterns = [
     path('branchinventory/',v_inv.branchinventoryView.as_view()),
     path('branchinventory/?search=',v_inv.branchinventoryView.as_view()),
     path('transferinfo/',v_inv.transferinfoView.as_view()),
+    path('stockdetail/',v_inv.export_pdfinv.as_view()),
+    path('stockdetail/<str:pk>/',v_inv.export_pdfinv.as_view()),
 
 
     path('phone/',v.phoneView.as_view()),

@@ -13,7 +13,6 @@ from weasyprint import HTML
 import tempfile
 # from django.db.models import Sum
 
-
 class export_pdf(APIView):
     permission_classes=[AllowAny]
     def get(self,request,format=None,pk=None):
@@ -21,26 +20,16 @@ class export_pdf(APIView):
         response=HttpResponse(content_type='application/pdf')
         response['Content-Disposition']='inline; attachment; filename=Sell'+\
             str(datetime.datetime.now())+'.pdf'
-
         response['Content-Transfer-Encoding']='binary'
-
         sells=sell.objects.filter(branch_code=id)
-
         html_string=render_to_string('pdfoutput.html',{'sells':sells,'total':0,'bcode':id})
-
         html=HTML(string=html_string)
         result=html.write_pdf()
-
-
-
         with tempfile.NamedTemporaryFile(delete=True) as output:
             output.write(result)
             output.flush()
-
-
             output=open(output.name,'rb')
             response.write(output.read())
-        
         return response
 
 
