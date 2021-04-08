@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAdminUser,IsAuthenticated
 from rest_framework.authtoken.models import Token
+from rest_framework.filters import SearchFilter
+from rest_framework.generics import ListAPIView
 
 
 class ledgersView(APIView):
@@ -26,6 +28,12 @@ class accountView(APIView):
         acc=account.objects.filter(branch_code=request.user.username)
         serializer=accountSerializers(acc,many=True)
         return Response(serializer.data)
+
+class branchdebitView(ListAPIView):
+    queryset=account.objects.all()
+    serializer_class=accountSerializers
+    filter_backends=[SearchFilter]
+    search_fields=['^branch_code']
 
 
 class accountCreate(APIView):

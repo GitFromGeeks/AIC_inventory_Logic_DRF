@@ -36,6 +36,8 @@ urlpatterns = [
     path('stockdetail/',v_inv.export_pdfinv.as_view()),
     path('stockdetail/<str:pk>/',v_inv.export_pdfinv.as_view()),
     path('sellsview/',vue.sellsview.as_view()),
+    path('branchdebit/',vled.branchdebitView.as_view()),
+    path('branchdebit/?search=',vled.branchdebitView.as_view()),
 
 
     path('phone/',v.phoneView.as_view()),
