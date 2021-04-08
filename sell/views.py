@@ -12,6 +12,8 @@ from django.template.loader import render_to_string
 from weasyprint import HTML
 import tempfile
 # from django.db.models import Sum
+from phone.models import phone
+from ledgers.models import ledgers,debth
 
 class export_pdf(APIView):
     permission_classes=[AllowAny]
@@ -33,7 +35,6 @@ class export_pdf(APIView):
         return response
 
 
-
 class sell_create(APIView):
     def post(self,request,format=None):
         serializer=sellSerializers(data=request.data)
@@ -43,6 +44,13 @@ class sell_create(APIView):
                 obj=inventory.objects.get(branch_code=request.data.get('branch_code'),model=request.data.get('model'))
                 obj.quantity-=1
                 obj.save()
+                phn=phone.objects.get(model=request.data.get('model'))
+                rs=int(phn.price)
+                mb=phn.mobile
+                ob=debth.objects.get(branch_code=request.data.get('branch_code'))
+                ob.debth-=rs
+                ob.save()
+                ledgers.objects.create(branch_code=request.data.get('branch_code'),model=request.data.get('model'),quantity=1,mobile=mb,price=0,credit=rs,debit=0)
                 return Response('Sold')
             except inventory.DoesNotExist:
                 inventory.objects.create(branch_code=request.data.get('branch_code'),model=request.data.get('model'),mobile=request.data.get('mobile'),quantity=-1)
