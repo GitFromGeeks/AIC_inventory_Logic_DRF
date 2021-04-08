@@ -16,7 +16,8 @@ from django.template.loader import render_to_string
 from weasyprint import HTML
 import tempfile
 from django.http import HttpResponse
-
+# from django.db.models import Sum
+from django.db.models import Sum
 
 class export_pdfinv(APIView):
     permission_classes=[AllowAny]
@@ -27,7 +28,8 @@ class export_pdfinv(APIView):
             str(datetime.datetime.now())+'.pdf'
         response['Content-Transfer-Encoding']='binary'
         inven=inventory.objects.filter(branch_code=id)
-        html_string=render_to_string('inventoryinfo.html',{'inven':inven,'total':0,'bcode':id})
+        qty=inven.aggregate(Sum('quantity'))
+        html_string=render_to_string('inventoryinfo.html',{'inven':inven,'total':0,'bcode':id,'qty':qty})
         html=HTML(string=html_string)
         result=html.write_pdf()
         with tempfile.NamedTemporaryFile(delete=True) as output:
