@@ -4,7 +4,7 @@ from .models import sell
 from django.http import HttpResponse
 from inventory.models import inventory
 from rest_framework.response import Response
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView,ListAPIView
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import AllowAny
 import datetime
@@ -50,7 +50,9 @@ class sell_create(APIView):
         return Response(serializer.errors)
 
 
-
+class sellsview(ListAPIView):
+    queryset=sell.objects.all()
+    serializer_class=sellSerializers
 
 class sellsHistory(APIView):
     def get(self,request,format=None,pk=None):

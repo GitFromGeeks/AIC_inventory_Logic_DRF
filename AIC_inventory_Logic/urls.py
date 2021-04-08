@@ -35,6 +35,7 @@ urlpatterns = [
     path('transferinfo/',v_inv.transferinfoView.as_view()),
     path('stockdetail/',v_inv.export_pdfinv.as_view()),
     path('stockdetail/<str:pk>/',v_inv.export_pdfinv.as_view()),
+    path('sellsview/',vue.sellsview.as_view()),
 
 
     path('phone/',v.phoneView.as_view()),
