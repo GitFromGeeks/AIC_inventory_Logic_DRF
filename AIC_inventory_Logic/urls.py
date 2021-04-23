@@ -38,6 +38,7 @@ urlpatterns = [
     path('sellsview/',vue.sellsview.as_view()),
     path('branchdebit/',vled.branchdebitView.as_view()),
     path('branchdebit/?search=',vled.branchdebitView.as_view()),
+    path('totalledgers/',vled.ledgersTotalview.as_view()),
 
 
     path('phone/',v.phoneView.as_view()),

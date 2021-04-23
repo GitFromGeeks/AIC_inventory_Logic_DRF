@@ -21,6 +21,10 @@ class ledgersView(APIView):
         serializer=ledgersSerializers(led,many=True)
         return Response(serializer.data)
 
+class ledgersTotalview(ListAPIView):
+    queryset=ledgers.objects.all()
+    serializer_class=ledgersSerializers
+
 class accountView(APIView):
     def get(self,request,format=None,pk=None):
         id=pk
