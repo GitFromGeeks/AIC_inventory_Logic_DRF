@@ -69,6 +69,7 @@ urlpatterns = [
     path('login/',obtain_auth_token),
     path('transfer/',v_inv.transfer.as_view()),
     path('returnstock/',v_inv.Returnstock.as_view()),
+    path('returninfo/',v_inv.returninfoView.as_view()),
 
 
 ]
