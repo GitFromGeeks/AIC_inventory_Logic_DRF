@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import inventory,mobilestock,transferstock
+from .models import inventory,mobilestock,transferstock,returninfo
 
 
 @admin.register(inventory)
@@ -13,4 +13,8 @@ class mobilestockAdmin(admin.ModelAdmin):
 @admin.register(transferstock)
 class transferstockAdmin(admin.ModelAdmin):
     list_display=['id','created_at','frombranch','tobranch','model']
+
+@admin.register(returninfo)
+class returninfoAdmin(admin.ModelAdmin):
+    list_display=['id','created_at','branch_code','mobile','price']
     

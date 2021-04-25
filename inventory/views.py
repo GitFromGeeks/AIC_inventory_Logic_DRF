@@ -1,8 +1,8 @@
-from .models import inventory,mobilestock,transferstock
+from .models import inventory,mobilestock,transferstock,returninfo
 from ledgers.models import ledgers,debth
 from orders.models import orders
 from phone.models import phone
-from  .serializers import inventorySerializers,mobilestockSerializers,transferstockSerializers
+from  .serializers import inventorySerializers,mobilestockSerializers,transferstockSerializers,returninfoSerializers
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
@@ -56,6 +56,10 @@ class transferinfoView(ListAPIView):
     queryset=transferstock.objects.all()
     serializer_class=transferstockSerializers
 
+class returninfoView(ListAPIView):
+    queryset=returninfo.objects.all()
+    serializer_class=returninfoSerializers
+
 
 class branchinventoryView(ListAPIView):
     queryset=inventory.objects.all()
@@ -105,12 +109,14 @@ class Returnstock(APIView):
         obj.save()
         phn=phone.objects.get(model=request.data.get('model'))
         rs=phn.price
+        mbl=phn.mobile
         dbt=debth.objects.get(branch_code=request.data.get('branch_code'))
         dbt.debth-=rs
         dbt.save()
         mbstk=mobilestock.objects.get(model=request.data.get('model'))
         mbstk.quantity+=1
         mbstk.save()
+        returninfo.objects.create(branch_code=request.data.get('branch_code'),mobile=mbl,price=rs)
         return Response('Returned')
 
 
