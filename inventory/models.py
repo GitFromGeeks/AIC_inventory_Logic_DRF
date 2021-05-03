@@ -20,6 +20,17 @@ class transferstock(models.Model):
     def __str__(self):
         return self.frombranch
 
+class transfermobile(models.Model):
+    id=models.AutoField(primary_key=True)
+    created_at=models.DateField(auto_now_add=True)
+    frombranch=models.CharField(max_length=15)
+    tobranch=models.CharField(max_length=15)
+    model=models.CharField(max_length=40)
+    price=models.IntegerField()
+
+    def __str__(self):
+        return self.frombranch
+
 class returninfo(models.Model):
     id=models.AutoField(primary_key=True)
     created_at=models.DateField(auto_now_add=True)

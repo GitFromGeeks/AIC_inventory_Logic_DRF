@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import inventory,mobilestock,transferstock,returninfo
+from .models import inventory,mobilestock,transferstock,returninfo,transfermobile
 
 
 class inventorySerializers(serializers.ModelSerializer):
@@ -21,4 +21,9 @@ class returninfoSerializers(serializers.ModelSerializer):
     class Meta:
         model=returninfo
         fields=['id','created_at','branch_code','mobile','price']
+
+class transfermobileSerializers(serializers.ModelSerializer):
+    class Meta:
+        model=transfermobile
+        fields=['id','created_at','frombranch','tobranch','model','price']
         

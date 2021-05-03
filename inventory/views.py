@@ -1,8 +1,8 @@
-from .models import inventory,mobilestock,transferstock,returninfo
+from .models import inventory,mobilestock,transferstock,returninfo,transfermobile
 from ledgers.models import ledgers,debth
 from orders.models import orders
 from phone.models import phone
-from  .serializers import inventorySerializers,mobilestockSerializers,transferstockSerializers,returninfoSerializers
+from  .serializers import inventorySerializers,mobilestockSerializers,transferstockSerializers,returninfoSerializers,transfermobileSerializers
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
@@ -53,8 +53,8 @@ class inventoryView(APIView):
         return Response(serializer.data)
 
 class transferinfoView(ListAPIView):
-    queryset=transferstock.objects.all()
-    serializer_class=transferstockSerializers
+    queryset=transfermobile.objects.all()
+    serializer_class=transfermobileSerializers
 
 class returninfoView(ListAPIView):
     queryset=returninfo.objects.all()
@@ -131,6 +131,7 @@ class transfer(APIView):
         dbt.debth-=rs
         dbt.save()
         transferstock.objects.create(frombranch=request.data.get('branch_code1'),tobranch=request.data.get('branch_code2'),model=request.data.get('model'))
+        transfermobile.objects.create(frombranch=request.data.get('branch_code1'),tobranch=request.data.get('branch_code2'),model=request.data.get('model'),price=rs)
         try:
             ob=inventory.objects.get(branch_code=request.data.get('branch_code2'),model=request.data.get('model'))
             ob.quantity+=1
